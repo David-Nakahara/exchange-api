@@ -1,0 +1,11 @@
+@ExchangeApi_HostAddress = http://localhost:5274
+
+POST {{ExchangeApi_HostAddress}}/exchange
+Content-Type: application/json
+
+{
+    "amount": 100, "from": "BRL", "to": "EUR"
+    
+}
+
+###
