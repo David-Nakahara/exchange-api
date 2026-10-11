@@ -29,14 +29,16 @@ app.MapPost ("/exchange", (ExchangeRequest request) =>
 
     var taxa = taxas.FirstOrDefault(t=> t.from == request.from  &&  t.to == request.to);
 
+    if (taxa == null)
+    {
+        return Results.BadRequest($"Cotação não encontrada para {request.from} > {request.to}");
+    }
+    
+
     var convertedAmount = request.amount * taxa.rate;
 
-    
 
-    
-    
-
-    return new ExchangeResponse (request.from , request.to , request.amount, taxa.rate, convertedAmount  );
+     return Results.Ok(new ExchangeResponse(request.from, request.to, request.amount, taxa.rate, convertedAmount));
 });
 
 
