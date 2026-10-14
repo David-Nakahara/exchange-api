@@ -17,17 +17,16 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var taxas = new List<ExchangeRate>
-    {
-        new ExchangeRate("BRL", "EUR", 0.17m, DateTime.UtcNow, "Fonte Educacional"),
-        new ExchangeRate("EUR", "BRL", 5.88m, DateTime.UtcNow, "Fonte Educacional")
-    };
+
+    var service = new ExchangeRateService();
+
+
 
 
 app.MapPost ("/exchange", (ExchangeRequest request) =>
 {
 
-    var taxa = taxas.FirstOrDefault(t=> t.from == request.from  &&  t.to == request.to);
+    var taxa = service.Find(request.from, request.to);
 
     if (taxa == null)
     {
