@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 
+builder.Services.AddSingleton<ExchangeRateService>();
+
 var app = builder.Build();
 
 
@@ -18,12 +20,12 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 
-    var service = new ExchangeRateService();
+    
 
 
 
 
-app.MapPost ("/exchange", (ExchangeRequest request) =>
+app.MapPost ("/exchange", (ExchangeRequest request, ExchangeRateService service) =>
 {
 
     var taxa = service.Find(request.from, request.to);
